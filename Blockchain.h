@@ -13,6 +13,7 @@ public:
     void AddBlock(Block bNew);
     void AddBlock(UserBlock bNew);
     uint8_t checkCred(string uNameIn, string hashPwd);
+    bool checkUname(string &uNameIn);
     uint32_t getLastIndex();
 private:
     uint32_t _nDifficulty;

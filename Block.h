@@ -10,7 +10,7 @@ class Block {
 public:
     string sHash;
     string sPrevHash;
-
+    bool isTransfer;
     Block(uint32_t nIndexIn, const string& sDataIn);
     uint32_t getIndex();
     void MineBlock(uint32_t nDifficulty);

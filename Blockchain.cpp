@@ -50,6 +50,15 @@ uint8_t Blockchain::checkCred(string uNameIn, string hashPwd)
     
 
 }
+bool Blockchain::checkUname(string &uNameIn)
+{
+    for (UserBlock ub : _uChain)
+    {
+        if (ub.getuName() == uNameIn)
+            return false;
+    }
+    return true;
+}
 Block Blockchain::_GetLastBlock() const
 {
     if (!_vChain.empty())

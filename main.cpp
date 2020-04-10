@@ -1,12 +1,90 @@
 #include "Blockchain.h"
 #include "sha256.h"
 #include <conio.h>
+string uName;
+bool regi(Blockchain& bChain)
+{
+    string pWord;
+    cout << "\nRegistration Menu";
+    cout << "\nEnter your desired username:";
+    cin >> uName;
+    //check username
+    if (bChain.checkUname(uName))
+    {
+        cout << "\nEnter your desired password:";
+        char c = _getch();
+        while (c != '\r')
+        {
+            if (c == '\b') {
+                pWord.pop_back();
+                c = _getch();
+                continue;
+            }
+            pWord += c;
+            c = _getch();
+        }
+        cout << endl;
+        bChain.AddBlock(UserBlock(uName, sha256(pWord)));
+        pWord = "";
+        uName = "";
+        return true;
+    }
+    else
+    {
+        cout << "Username taken";
+        return false;
+    }
+}
+bool login(Blockchain &bChain)
+{
+    string pWord;
+    cout << "\nLogin Menu";
+    cout << "\nEnter your username:";
+    cin >> uName;
+    cout << "\nEnter your password:";
+    char c = _getch();
+    while (c != '\r')
+    {
+        if (c == '\b') {
+            pWord.pop_back();
+            c = _getch();
+            continue;
+        }
+        pWord += c;
+        c = _getch();
+    }
+    cout << endl;
+    //check
+    uint8_t check = bChain.checkCred(uName, sha256(pWord));
+    //correct details
+    if (check == 1)
+    {
+        cout << "\nWelcome " << uName;
+        return true;
+        pWord = "";
+    }
+    //wrong pwd
+    else if (check == 0)
+    {
+        cout << "\nInvalid Password";
+        pWord = "";
+        uName = "";
+    }
+    //both wrong
+    else
+    {
+        cout << "\nInvalid Username";
+        pWord = "";
+        uName = "";
+    }
+    return false;
+}
 int main()
 {
     Blockchain bChain = Blockchain();
     int choice = -1, iteration = 0;
-    string uName, pWord;
     bool correctUserCred = false;
+    //CHOOSE
     while (!(choice >= 1 && choice <= 2))
     {
         if (!iteration)
@@ -20,80 +98,52 @@ int main()
         iteration++;
         cin >> choice;
     }
-    while (!correctUserCred)
+    while (!correctUserCred)//LOGIN OR REG
     {
-        if (choice == 1)
+        if (choice == 1)//Login
         {
-            cout << "\nLogin Menu";
-            cout << "\nEnter your username:";
-            cin >> uName;
-            cout << "\nEnter your password:";
-            char c = _getch();
-            while (c != '\r')
-            {
-                if (c == '\b') {
-                    pWord.pop_back();
-                    c = _getch();
-                    continue;
-                }
-                pWord += c;
-                c = _getch();
-            }
-            cout << endl;
-            //check
-            uint8_t check = bChain.checkCred(uName, sha256(pWord));
-            if (check == 1)
-            {
-                cout << "\nWelcome " << uName;
-                correctUserCred = true;
-            }
-            else if (check == 0)
-            {
-                cout << "\nInvalid Password";
-            }
-            else
-            {
-                cout << "\nInvalid Username";
-            }
-            pWord = "";
-            uName = "";
+            correctUserCred = login(bChain);
         }
-        if (choice == 2)
+        if (choice == 2)//Register
         {
-            //REG
-            cout << "\nRegistration Menu";
-            cout << "\nEnter your desired username:";
-            cin >> uName;
-
-            //check username
-            cout << "\nEnter your desired password:";
-            char c = _getch();
-            while (c != '\r')
+            if (regi(bChain))//Check uname taken 
             {
-                if (c == '\b') {
-                    pWord.pop_back();
-                    c = _getch();
-                    continue;
-                }
-                pWord += c;
-                c = _getch();
+                choice = 1;
             }
-            cout << endl;
-            bChain.AddBlock(UserBlock(uName, sha256(pWord)));
-            pWord = "";
-            uName = "";
-            choice = 1;
         }
     }
+    //USER LOGGED IN
+    choice = -1, iteration = 0;
+    //CHOOSE
+    while (!(choice >= 1 && choice <= 3))
+    {
+        if (iteration)
+        {
+            cout << "Please enter correct choice";
+        }
+        cout << "\nMenu" << endl;
+        cout << "1: Transfer" << endl;
+        cout << "2: Recieved" << endl;
+        cout << "3: Show My Shipment" << endl;
+        cout << "4: Logout" << endl;
+        cout << "Enter your choice: ";
+        iteration++;
+        cin >> choice;
+    }
+    if (choice == 1) //Transfer
+    {
+        //(uName, DEST UNAME, Shipment details)
+        // Ask password
 
-    cout << "Mining block 1..." << endl;
-    bChain.AddBlock(Block(bChain.getLastIndex() + 1, uName));
-
-    cout << "Mining block 2..." << endl;
-    bChain.AddBlock(Block(bChain.getLastIndex() + 1, "Block 2 Data"));
-
-    cout << "Mining block 3..." << endl;
-    bChain.AddBlock(Block(bChain.getLastIndex() + 1, "Block 3 Data"));
+    }
+    else if (choice == 2) //Recieved
+    {
+        //check DEST UNAME == uName
+    }
+    else if (choice == 3) 
+    {
+        //check 
+    }
 
     return 0;
 }
