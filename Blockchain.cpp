@@ -1,7 +1,3 @@
-//
-// Created by Dave Nash on 20/10/2017.
-//
-
 #include "Blockchain.h"
 
 Blockchain::Blockchain()

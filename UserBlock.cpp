@@ -1,7 +1,3 @@
-//
-// Created by Dave Nash on 20/10/2017.
-//
-
 #include "UserBlock.h"
 #include "sha256.h"
 #include <time.h>
