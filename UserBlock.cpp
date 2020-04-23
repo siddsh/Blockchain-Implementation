@@ -2,7 +2,6 @@
 #include "sha256.h"
 #include <time.h>
 #include <vector>
-#include "RSA.h"
 #include "md5.h"
 #include "AES128.h"
 UserBlock::UserBlock() : uName(""), pWordHash("")

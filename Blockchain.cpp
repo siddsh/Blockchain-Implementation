@@ -3,6 +3,7 @@
 #include "AES128.h"
 #include "MD5.h"
 
+
 Blockchain::Blockchain(uint32_t nd)
 {
     _nDifficulty = nd;
@@ -48,6 +49,49 @@ bool Blockchain::checkAuthenticity(long long int sender, long long int receiver,
             return false;
     }
     return a;
+}
+string Blockchain::getUser(long long int pub)
+{
+    for (auto a : _uChain)
+    {
+        if (a.getPublicKey() == pub)
+            return a.getuName();
+    }
+    return "";
+}
+vector<Deets> Blockchain::getUserDeets(UserBlock u)
+{
+    vector<Deets> ret;
+    for (Block bk : _vChain)
+    {
+        if (bk.getSPubK() == u.getPublicKey() && bk.getSender() == true)
+        {
+            bool rec = false;
+            for (Block blk : _vChain)
+            {
+                if (bk.getID() == blk.getID() && blk.getSender() == false)
+                {
+                    rec = true;
+                }
+            }
+            Deets tp = { bk, rec };
+            ret.push_back(tp);
+        }
+        else if (bk.getRPubK() == u.getPublicKey() && bk.getSender() == true)
+        {
+            bool rec = false;
+            for (Block blk : _vChain)
+            {
+                if (bk.getID() == blk.getID() && blk.getSender() == false)
+                {
+                    rec = true;
+                }
+            }
+            Deets tp = { bk, rec };
+            ret.push_back(tp);
+        }
+    }
+    return ret;
 }
 void Blockchain::AddBlock(Block bNew)
 {

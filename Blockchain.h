@@ -4,6 +4,12 @@
 #include "UserBlock.h"
 using namespace std;
 
+struct Deets
+{
+    Block blk;
+    bool isRec;
+};
+
 class Blockchain {
 public:
     Blockchain(uint32_t nd);
@@ -16,6 +22,8 @@ public:
     long long int getPubK(string str);
     bool checkKey(long long int d);
     bool checkAuthenticity(long long int sender, long long int receiver, string id);
+    string getUser(long long int pub);
+    vector<Deets> getUserDeets(UserBlock u);
 private:
     
     vector<Block> _vChain;

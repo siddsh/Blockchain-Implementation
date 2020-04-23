@@ -91,13 +91,11 @@ void RSA::RSAdecrypt(const long long int& d, vector<long long int>& en, string& 
 
 RSA::RSA(string file)
 {
-    /*fstream f;
+    fstream f;
     f.open(file, ios::binary | ios::in);
     f.read((char*)&x, sizeof(x));
     f.read((char*)&y, sizeof(y));
-    f.close();*/
-    x = 23;
-    y = 19;
+    f.close();
     n = long long int(x) * long long int(y);
     phi = n - x - y + 1;
 }
