@@ -1,4 +1,10 @@
 #include "AES128.h"
+#include <unordered_map>
+
+using namespace std;
+
+typedef bitset<8> byte;
+typedef bitset<32> word;
 
 extern byte S_Box[16][16] = {
     {0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76},
@@ -140,7 +146,7 @@ void ShiftRows(byte mtx[4 * 4])
     mtx[12] = temp;
 }
 
-byte GFMul(byte a, byte b) 
+byte GFMul(byte a, byte b)
 {
     byte p = 0;
     byte hi_bit_set;
@@ -356,35 +362,4 @@ string AESdecrypt(string iv, string ct)
             s << '0' << hex << in[i].to_ulong();
     }
     return s.str();
-}
-
-
-
-void hex_toLL(string hex, long long int out)
-{
-    out = 0;
-    unordered_map<char, int> mp;
-    mp['0'] = 0x00;
-    mp['1'] = 0x01;
-    mp['2'] = 0x02;
-    mp['3'] = 0x03;
-    mp['4'] = 0x04;
-    mp['5'] = 0x05;
-    mp['6'] = 0x06;
-    mp['7'] = 0x07;
-    mp['8'] = 0x08;
-    mp['9'] = 0x09;
-    mp['a'] = 0x0a;
-    mp['b'] = 0x0b;
-    mp['c'] = 0x0c;
-    mp['d'] = 0x0d;
-    mp['e'] = 0x0e;
-    mp['f'] = 0x0f;
-    int a = hex.length();
-    out = mp[a - 1];
-    for (int i = a - 2; a >= 0; --a)
-    {
-        out << 4;
-        out += mp[i];
-    }
 }

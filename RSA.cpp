@@ -12,12 +12,12 @@ int RSA::gcd(int a, int b) {
 }
 
 //function to generate encryption key
-void RSA::encryption_key(long long int &e, long long int &d)
+void RSA::encryption_key(long long int& e, long long int& d)
 {
     unsigned long long int k;
     k = 0;
     //t = phi
-    while(true)
+    while (true)
     {
         e = (rand() % (phi - 2)) + 2;
         if (gcd(e, phi) == 1)
@@ -43,7 +43,7 @@ unsigned long long int RSA::cd(unsigned long long int a)
 }
 
 //function to encrypt the message
-void RSA::RSAencrypt(const long long int& e, string msg, vector<long long int> &en)
+void RSA::RSAencrypt(const long long int& e, string msg, vector<long long int>& en)
 {
     long long int pt = 0, k = 0;
     en.clear();
@@ -60,10 +60,12 @@ void RSA::RSAencrypt(const long long int& e, string msg, vector<long long int> &
             k *= pt;
             k %= n;
         }
+        //cout << k << "\t";
         en.push_back(k);
         i++;
     }
 }
+
 
 //function to decrypt the message
 void RSA::RSAdecrypt(const long long int& d, vector<long long int>& en, string& m)
@@ -84,16 +86,18 @@ void RSA::RSAdecrypt(const long long int& d, vector<long long int>& en, string& 
         m.push_back(k);
         i++;
     }
+    //cout << endl;
 }
 
-//Constructor. Pass file name to constructor.
 RSA::RSA(string file)
 {
-    fstream f;
+    /*fstream f;
     f.open(file, ios::binary | ios::in);
     f.read((char*)&x, sizeof(x));
     f.read((char*)&y, sizeof(y));
-    f.close();
+    f.close();*/
+    x = 23;
+    y = 19;
     n = long long int(x) * long long int(y);
     phi = n - x - y + 1;
 }
