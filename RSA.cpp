@@ -99,3 +99,19 @@ RSA::RSA(string file)
     n = long long int(x) * long long int(y);
     phi = n - x - y + 1;
 }
+//Returns Vector Containing Encrypted Values
+vector<long long int> RSAEncrypt(string& file, long long int& e, string& msg)
+{
+    RSA rsa("file");
+    vector<long long int> out;
+    rsa.RSAencrypt(e, msg, out);
+    return out;
+}
+
+string RSADecrypt(string& file, long long int& d, vector<long long int>& en)
+{
+    RSA rsa(file);
+    string out;
+    rsa.RSAdecrypt(d, en, out);
+    return out;
+}

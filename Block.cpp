@@ -6,6 +6,12 @@
 
 Block::Block()
 {
+    _isSent = NULL;
+    _nNonce = NULL;
+    sHash = "";
+    _sShipmentID = "";
+    _sPubK = NULL;
+    _rPubK = NULL;
 }
 
 Block::Block(const string &sID, const long long int &sPK, const long long int& rPK, bool send): _sShipmentID(sID), _sPubK(sPK), _rPubK(rPK)
@@ -66,19 +72,17 @@ void Block::setEncrHash(vector<long long int> &v)
 
 bool Block::verify()
 {
+    string file = "values";
     cout << "Decrypting the stored Encrypted hash by RSA with user's Public key\n";
-    RSA r("values");
     string decryptedHash;
-    //cout << "Encr Hash:" << _encryptedHash << endl;
-    r.RSAdecrypt(_sPubK, _encryptedHash, decryptedHash);
+    decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
     if (decryptedHash == sHash)
     {
         return true;
     }
     else
     {
-        decryptedHash = "";
-        r.RSAdecrypt(_rPubK, _encryptedHash, decryptedHash);
+        decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
         if (decryptedHash == sHash)
         {
             return true;
@@ -90,12 +94,7 @@ bool Block::verify()
 inline string Block::_CalculateHash() const
 {
     stringstream ss;
-    ss << _nIndex << sPrevHash << _tTime << _sShipmentID << _sPubK << _rPubK << _nNonce << _isSent;
+    ss << sPrevHash << _tTime << _sShipmentID << _sPubK << _rPubK << _nNonce << _isSent;
 
     return sha256(ss.str());
-}
-
-uint32_t Block::getIndex()
-{
-    return _nIndex;
 }

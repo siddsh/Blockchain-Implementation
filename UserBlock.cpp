@@ -74,7 +74,7 @@ bool UserBlock::validate(uint32_t nd)
 inline string UserBlock::_CalculateHash() const
 {
     stringstream ss;
-    ss << _nIndex << sPrevHash << _tTime << _nNonce << uName << pWordHash << _publicKey << _privateKey;
+    ss << sPrevHash << _tTime << _nNonce << uName << pWordHash << _publicKey << _privateKey;
 
     return sha256(ss.str());
 }

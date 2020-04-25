@@ -13,24 +13,24 @@ struct Deets
 class Blockchain {
 public:
     Blockchain(uint32_t nd);
-    uint32_t _nDifficulty;
+
     void AddBlock(Block bNew);
     void AddBlock(UserBlock bNew);
-    UserBlock checkCred(string uNameIn, string hashPwd);
-    bool checkUname(string &uNameIn);
-    uint32_t getLastIndex();
-    long long int getPubK(string str);
+    bool checkID(string id);
     bool checkKey(long long int d);
     bool checkAuthenticity(long long int sender, long long int receiver, string id);
+    bool checkUname(string& uNameIn);
+    long long int getPubK(string str);
     string getUser(long long int pub);
+    UserBlock checkCred(string uNameIn, string hashPwd);
     vector<Deets> getUserDeets(UserBlock u);
+
+    uint32_t _nDifficulty;
 private:
-    
-    vector<Block> _vChain;
-
-    vector<UserBlock> _uChain;
-
     Block _GetLastBlock() const;
     UserBlock _GetLastUserBlock() const;
+
+    vector<Block> _vChain;
+    vector<UserBlock> _uChain;
 };
 

@@ -11,10 +11,17 @@ Blockchain::Blockchain(uint32_t nd)
     _uChain.emplace_back(UserBlock("admin", sha256("admin"), AESencrypt(md5("admin"), "1"), 1));
     cout << "Blockchain Initialized" << endl;
 }
-uint32_t Blockchain::getLastIndex()
+
+bool Blockchain::checkID(string id)
 {
-    return _GetLastBlock().getIndex();
+    for (auto a : _vChain)
+    {
+        if (a.getID() == id)
+            return false;
+    }
+    return true;
 }
+
 long long int Blockchain::getPubK(string str)
 {
     for (UserBlock ub : _uChain)
@@ -26,6 +33,7 @@ long long int Blockchain::getPubK(string str)
     }
     return -1;
 }
+
 bool Blockchain::checkKey(long long int d)
 {
     for (UserBlock ub : _uChain)
@@ -38,6 +46,7 @@ bool Blockchain::checkKey(long long int d)
     }
     return true;
 }
+
 bool Blockchain::checkAuthenticity(long long int sender, long long int receiver, string id)
 {
     bool a = false;
@@ -50,6 +59,7 @@ bool Blockchain::checkAuthenticity(long long int sender, long long int receiver,
     }
     return a;
 }
+
 string Blockchain::getUser(long long int pub)
 {
     for (auto a : _uChain)
@@ -59,6 +69,7 @@ string Blockchain::getUser(long long int pub)
     }
     return "";
 }
+
 vector<Deets> Blockchain::getUserDeets(UserBlock u)
 {
     vector<Deets> ret;
@@ -93,6 +104,7 @@ vector<Deets> Blockchain::getUserDeets(UserBlock u)
     }
     return ret;
 }
+
 void Blockchain::AddBlock(Block bNew)
 {
     bNew.sPrevHash = _GetLastBlock().sHash;
@@ -100,12 +112,14 @@ void Blockchain::AddBlock(Block bNew)
    
     _vChain.push_back(bNew);
 }
+
 void Blockchain::AddBlock(UserBlock bNew)
 {
     bNew.sPrevHash = _GetLastUserBlock().sHash;
     //bNew.MineBlock(_nDifficulty);
     _uChain.push_back(bNew);
 }
+
 UserBlock Blockchain::checkCred(string uNameIn, string hashPwd)
 {
     UserBlock out;
@@ -119,15 +133,17 @@ UserBlock Blockchain::checkCred(string uNameIn, string hashPwd)
             }
             else
             {
-                cout << "Invalid password" << endl;
+                cout << "\nInvalid password" << endl;
+                //system("pause");
                 return out;
             }
         }
        
     }
-    cout << "Invalid Username" << endl;
+    cout << "\nInvalid Username" << endl;
     return out;
 }
+
 bool Blockchain::checkUname(string &uNameIn)
 {
     for (UserBlock ub : _uChain)
@@ -137,6 +153,7 @@ bool Blockchain::checkUname(string &uNameIn)
     }
     return true;
 }
+
 Block Blockchain::_GetLastBlock() const
 {
     if (!_vChain.empty())

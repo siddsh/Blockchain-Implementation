@@ -20,7 +20,6 @@ public:
     bool validate(uint32_t nd);
 
 private:
-    uint32_t _nIndex;
     uint32_t _nNonce;
     string uName;
     string pWordHash;
