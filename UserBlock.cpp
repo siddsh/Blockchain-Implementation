@@ -4,29 +4,29 @@
 #include <vector>
 #include "md5.h"
 #include "AES128.h"
-UserBlock::UserBlock() : uName(""), pWordHash("")
+UserBlock::UserBlock() : _uName(""), _pWordHash("")
 {
     sHash = "";
     _tTime = time(nullptr);
     _nNonce = 0;
 }
 
-UserBlock::UserBlock(const string& uNameIn, const string& hashPwd, const string &e, const long long int &d) : uName(uNameIn), pWordHash(hashPwd), _privateKey(e)
+UserBlock::UserBlock(const string& _uNameIn, const string& hashPwd, const string &e, const long long int &d) : _uName(_uNameIn), _pWordHash(hashPwd), _privateKey(e)
 {
     _publicKey = d;
     _nNonce = 0;
     _tTime = time(nullptr);
     sHash = _CalculateHash();
-    if (uNameIn == "admin")
+    if (_uNameIn == "admin")
         return;
 }
 string UserBlock::getuName()
 {
-    return uName;
+    return _uName;
 }
 string UserBlock::getHashPword()
 {
-    return pWordHash;
+    return _pWordHash;
 }
 long long int UserBlock::getPublicKey()
 {
@@ -74,7 +74,7 @@ bool UserBlock::validate(uint32_t nd)
 inline string UserBlock::_CalculateHash() const
 {
     stringstream ss;
-    ss << sPrevHash << _tTime << _nNonce << uName << pWordHash << _publicKey << _privateKey;
+    ss << sPrevHash << _tTime << _nNonce << _uName << _pWordHash << _publicKey << _privateKey;
 
     return sha256(ss.str());
 }

@@ -78,19 +78,24 @@ bool Block::verify()
         n += '0';
     }
     string file = "values";
-    cout << "Decrypting the stored Encrypted hash by RSA with user's Public key\n";
     string decryptedHash;
-    decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
-    if (decryptedHash == sHash && n == sHash.substr(0, _nNonce))
+    if (sHash == _CalculateHash() && n == sHash.substr(0, _nNonce))
     {
-        return true;
-    }
-    else
-    {
+        cout << "Decrypting the stored Encrypted hash by RSA with user's Public key\n";
         decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
-        if (decryptedHash == sHash && n == sHash.substr(0, _nNonce))
+        if (decryptedHash == sHash)
         {
             return true;
+        }
+        else
+        {
+            cout << "\nBlock not added by sender\n\n";
+            cout << "Decrypting the stored Encrypted hash by RSA with receiver's Public key\n";
+            decryptedHash = RSADecrypt(file, _rPubK, _encryptedHash);
+            if (decryptedHash == sHash)
+            {
+                return true;
+            }
         }
     }
     return false;

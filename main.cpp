@@ -172,7 +172,8 @@ void transfer(UserBlock& user, Blockchain& bChain)
 
                     //Encrypt Hask(Signature)
                     vector<long long int> encrhash;
-                    encrhash = RSAEncrypt("values", e, transaction.sHash);
+                    string file = "values";
+                    encrhash = RSAEncrypt(file, e, transaction.sHash);
                     transaction.setEncrHash(encrhash);
 
                     //Validate Block
