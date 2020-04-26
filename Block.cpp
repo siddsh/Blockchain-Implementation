@@ -72,18 +72,23 @@ void Block::setEncrHash(vector<long long int> &v)
 
 bool Block::verify()
 {
+    string n;
+    for (int i = 0; i < _nNonce; i++)
+    {
+        n += '0';
+    }
     string file = "values";
     cout << "Decrypting the stored Encrypted hash by RSA with user's Public key\n";
     string decryptedHash;
     decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
-    if (decryptedHash == sHash)
+    if (decryptedHash == sHash && n == sHash.substr(0, _nNonce))
     {
         return true;
     }
     else
     {
         decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
-        if (decryptedHash == sHash)
+        if (decryptedHash == sHash && n == sHash.substr(0, _nNonce))
         {
             return true;
         }
