@@ -29,6 +29,7 @@ bool login(Blockchain& bChain, UserBlock& user);
 
 UserBlock regLog(Blockchain& bChain);
 
+
 int main()
 {    
     srand(time(NULL));
@@ -60,7 +61,7 @@ int main()
                 showUser(user, bChain);
                 break;
             case 4:
-                system("CLS");
+                isExit = true;
                 message("LOGGED OUT\n");
                 break;
             case 5:
@@ -71,6 +72,7 @@ int main()
     
     return 0;
 }
+
 
 void getpWord(string& pWord)
 {
