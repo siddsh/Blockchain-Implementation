@@ -29,6 +29,7 @@ Block::Block(const string &sID, const long long int &sPK, const long long int& r
 
 void Block::MineBlock(uint32_t nDifficulty)
 {
+    _nDiff = nDifficulty;
     string str;
     for (uint32_t i = 0; i < nDifficulty; ++i)
     {
@@ -73,15 +74,15 @@ void Block::setEncrHash(vector<long long int> &v)
 bool Block::verify()
 {
     string n;
-    for (int i = 0; i < _nNonce; i++)
+    for (int i = 0; i < _nDiff; i++)
     {
         n += '0';
     }
-    string file = "values";
-    string decryptedHash;
-    if (sHash == _CalculateHash() && n == sHash.substr(0, _nNonce))
+    if (sHash == _CalculateHash() && sHash.substr(0, _nDiff) == n)
     {
+        string file = "values";
         cout << "Decrypting the stored Encrypted hash by RSA with user's Public key\n";
+        string decryptedHash;
         decryptedHash = RSADecrypt(file, _sPubK, _encryptedHash);
         if (decryptedHash == sHash)
         {
@@ -89,8 +90,7 @@ bool Block::verify()
         }
         else
         {
-            cout << "\nBlock not added by sender\n\n";
-            cout << "Decrypting the stored Encrypted hash by RSA with receiver's Public key\n";
+            cout << "Block not added bu sender\nDecrypting the stored Encrypted hash by RSA with receiver's Public key\n";
             decryptedHash = RSADecrypt(file, _rPubK, _encryptedHash);
             if (decryptedHash == sHash)
             {

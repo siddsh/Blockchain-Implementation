@@ -22,8 +22,8 @@ public:
 
 private:
     uint32_t _nNonce;
-    string _uName;
-    string _pWordHash;
+    string uName;
+    string pWordHash;
     string _privateKey;
     long long int _publicKey;
     time_t _tTime;

@@ -24,6 +24,7 @@ public:
 private:
     bool _isSent;
     uint32_t _nNonce;
+    int _nDiff;
     long long int _sPubK;
     long long int _rPubK;
     string _sShipmentID;

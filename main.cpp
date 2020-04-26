@@ -60,9 +60,8 @@ int main()
                 showUser(user, bChain);
                 break;
             case 4:
-                //system("CLS");
-                isExit = true;
-                cout << "\nLOGGED OUT\n\n";
+                system("CLS");
+                message("LOGGED OUT\n");
                 break;
             case 5:
                 return 0;
@@ -93,7 +92,7 @@ int menu(UserBlock& user)
     int choice = 0, iteration = 0;
     while (!(choice >= 1 && choice <= 5))
     {
-        //system("CLS");
+        system("CLS");
         if (iteration)
         {
             cout << "Please enter correct choice\n\n";
@@ -119,12 +118,12 @@ void message(string message)
     cout << endl << "Press ENTER to continue" << endl;
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cin.get();
-    //system("CLS");
+    system("CLS");
 }
 
 void transfer(UserBlock& user, Blockchain& bChain)
 {
-    //system("CLS");
+    system("CLS");
     bool passowrdCorrect = false;
     //check for PK
     //Enter Password
@@ -217,7 +216,7 @@ void transfer(UserBlock& user, Blockchain& bChain)
 
 void receive(UserBlock& user, Blockchain& bChain)
 {
-    //system("CLS");
+    system("CLS");
     bool passowrdCorrect = false;
 
     while (!passowrdCorrect)
@@ -302,7 +301,7 @@ void receive(UserBlock& user, Blockchain& bChain)
 
 void showUser(UserBlock& user, Blockchain& bChain)
 {
-    //system("CLS");
+    system("CLS");
     vector<Deets> userDeets;
     userDeets = bChain.getUserDeets(user);
     if (userDeets.size() == 0)
@@ -471,7 +470,7 @@ UserBlock regLog(Blockchain& bChain)
         cout << "Enter your choice: ";
         iteration++;
         cin >> choice;
-        //system("CLS");
+        system("CLS");
     }
     iteration = 0;
     while (!correctUserCred)//LOGIN OR REG
@@ -490,7 +489,7 @@ UserBlock regLog(Blockchain& bChain)
                 cin.get();
             }
         }
-        //system("CLS");
+        system("CLS");
     }
     return user;
 }

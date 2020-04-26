@@ -45,6 +45,7 @@ unsigned long long int RSA::cd(unsigned long long int a)
 //function to encrypt the message
 void RSA::RSAencrypt(const long long int& e, string msg, vector<long long int>& en)
 {
+    n = x * y;
     long long int pt = 0, k = 0;
     en.clear();
     int len = 0;
@@ -96,13 +97,13 @@ RSA::RSA(string file)
     f.read((char*)&x, sizeof(x));
     f.read((char*)&y, sizeof(y));
     f.close();
-    n = long long int(x) * long long int(y);
+    n = x * y;
     phi = n - x - y + 1;
 }
 //Returns Vector Containing Encrypted Values
 vector<long long int> RSAEncrypt(string& file, long long int& e, string& msg)
 {
-    RSA rsa("file");
+    RSA rsa(file);
     vector<long long int> out;
     rsa.RSAencrypt(e, msg, out);
     return out;
