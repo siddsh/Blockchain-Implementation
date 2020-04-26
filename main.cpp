@@ -61,7 +61,8 @@ int main()
                 break;
             case 4:
                 //system("CLS");
-                message("LOGGED OUT\n");
+                isExit = true;
+                cout << "\nLOGGED OUT\n\n";
                 break;
             case 5:
                 return 0;
