@@ -62,7 +62,7 @@ int main()
                 break;
             case 4:
                 isExit = true;
-                message("LOGGED OUT\n");
+                message("\n\nLOGGED OUT\n");
                 break;
             case 5:
                 return 0;
